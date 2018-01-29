@@ -245,7 +245,7 @@ print STDERR "DEBUG: PDF $pdf latexdiff-vc command line: ", join(" ",@ARGV), "\n
 ###exit;
 
 $file2=pop @ARGV;
-( defined($file2) && $file2 =~ /\.(tex|bbl|flt)$/ ) or pod2usage("Must specify at least one tex, bbl or flt file");
+( defined($file2) && $file2 =~ /\.(tex|bbl|flt)$/ && $file2 =~ /^(?!-)/) or pod2usage("Must specify at least one tex, bbl or flt file not starting with -");
 
 if (! $vc && scalar(@revs)>0 ) {
   # have to guess $vc
@@ -318,7 +318,7 @@ if ( scalar(@revs)>0 ) {
 
 @files=($file2);
 while( $file1=pop @ARGV ) {
-  if ( $file1 =~ /\.(tex|bbl|flt)$/ ) {
+  if ( $file1 =~ /\.(tex|bbl|flt)$/ && $file1 =~ /^(?!-)/ ) {
     # $file1 looks like a valid file name and is prepended to file list
     unshift @files, $file1 ;
   } else {
